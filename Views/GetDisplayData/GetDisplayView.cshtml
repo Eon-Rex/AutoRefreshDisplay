@@ -1,0 +1,458 @@
+﻿@model List<AmberProject.Models.AcxVendPortVehicleArrIntimationEntityGetDisplay>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gate Display</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .table-container {
+            max-height: 700px;
+            overflow: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+            max-width: 1920px;
+            text-align: center;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            word-break: break-word;
+            max-width: 200px;
+            position: relative;
+            font-size: 13px;
+            text-align: center;
+        }
+
+            th:not(:last-child)::after,
+            td:not(:last-child)::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                right: -1px;
+                height: 100%;
+                width: 1px;
+                background-color: #ccc;
+            }
+
+        thead th {
+            position: sticky;
+            top: 0;
+            color: #fff;
+            font-weight: bold;
+            background: linear-gradient(to right, #007bff, #2196f3);
+            z-index: 1;
+            height: 40px; /* Adjust the table header height as desired */
+        }
+
+        .light-pink {
+            background-color: #f8bbd0;
+            color: #000;
+        }
+
+        .green {
+            background-color: #c8e6c9;
+            color: #000;
+        }
+
+        .filter-form {
+            margin-top: 7px;
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-gap {
+            margin-right: 20px;
+        }
+
+        .filter-label {
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 25px;
+        }
+
+        .filter-select {
+            padding: 6px;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        .filter-btn {
+            background: linear-gradient(to right, #007bff, #2196f3);
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+            .filter-btn:hover {
+                background: linear-gradient(to right, #2196f3, #64b5f6);
+            }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: linear-gradient(to right, #007bff, #2196f3);
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3051a0;
+        }
+
+        .Format {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+            height: 50px; /* Decrease the font size of the Format div content */
+        }
+
+        .left-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .center-content {
+            text-align: center;
+            flex-grow: 1;
+            margin-right: 20%;
+        }
+
+        .right-content {
+            display: flex;
+            align-items: center;
+        }
+
+            .right-content button {
+                margin-right: 10px;
+            }
+
+        .display {
+            width: 111px;
+        }
+
+        /* Custom styles for the checkboxes */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+            .checkbox-group label {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+            }
+
+            .checkbox-group input[type="checkbox"] {
+                margin-right: 5px;
+            }
+
+        /* Custom styles for the dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            min-width: 150px;
+            max-height: 160px;
+            overflow-y: auto;
+        }
+
+        .dropdown.open .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown.open .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown .dropdown-menu .option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+        .red {
+            background-color: lightpink;
+            color: #000;
+        }
+
+        .blue {
+            background-color: lightblue;
+            color: #000;
+        }
+
+        .green {
+            background-color: #c8e6c9;
+            color: #000;
+        }
+            .dropdown .dropdown-menu .option input[type="checkbox"] {
+                margin-right: 5px;
+            }
+
+        .logo {
+            float: right;
+        }
+
+        .dropdown .dropdown-toggle {
+            align-items: center;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 95px;
+        }
+
+        .light-gray {
+            background-color: lightgray;
+        }
+        .logout-btn {
+            background: linear-gradient(to right, #007bff, #2196f3);
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+            .logout-btn:hover {
+                background: linear-gradient(to right, #2196f3, #64b5f6);
+            }
+
+
+    </style>
+</head>
+<body>
+    <div class="Format">
+        <div class="left-content">
+            <form id="filterForm" class="filter-form" action="/GetDisplayData/GetDisplayView" method="get">
+                <div class="form-group">
+                    <label for="selectedSiteIds" class="filter-label">Site:</label>
+                    <div class="dropdown">
+                        <div class="dropdown-toggle" onclick="toggleDropdown()">
+                            <span>Select</span>
+                            <span class="logo">&#9660;</span>
+                        </div>
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            @if (ViewBag.selectedSiteId != null && ViewBag.selectedSiteId.Count > 0)
+                            {
+                              <div class="checkbox-group">
+                                @foreach (var site in ViewBag.selectedSiteId)
+                                {
+                                  <label class="option">
+                                    <input type="checkbox" name="selectedSiteIds" value="@site.Value" />
+                                    <span>@site.Text</span>
+                                  </label>
+                                }
+                              </div>
+                            }
+                            else
+                            {
+                              <div>No sites available.</div>
+                            }
+                            @*@foreach (var site in ViewBag.selectedSiteId)
+    {
+
+          <label class="option">
+          <input type="checkbox" name="selectedSiteIds" value="@site.Value" />
+          <span>@site.Text</span>
+      </label>
+    }*@
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="applySelection()">View</button>
+         </form>
+        </div>
+
+        <div class="center-content">
+            <h1>GATE DISPLAY</h1>
+        </div>
+        <div class="right-content">
+            <button type="button" onclick="logout()" class="logout-btn">Logout</button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 100px;">Vehicle Number</th>
+                    <th style="width: 70px;">Arrival No.</th>
+                    <th style="width: 70px;">Arrival Date</th>
+                    <th style="width: 70px;">Arrival Time</th>
+                    <th style="width: 100px;">Vendor Name</th>
+                    <th style="width: 160px;">Transporter Name</th>
+                    <th style="width: 50px;">TO Site</th>
+                    <th style="width: 120px;">Vehicle Arrival GP No.</th>
+                    <th style="width: 140px;">Gate Entry Date Time</th>
+                    <th style="width: 140px;">Exit Date Time</th>
+                    <th style="width: 70px;">Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+              @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+              {
+                <tr>
+                  <td colspan="11">@ViewBag.ErrorMessage</td>
+                </tr>
+              }
+              @if (ViewBag.ShowData == true)
+              {
+                if (Model != null && Model.Count > 0)
+                {
+                  foreach (var model in Model)
+                  {
+
+                    <tr class="@(model.VehicleExit == "Yes" ? "red" : (model.VehicleEnter == "Yes" ? "green" : "blue"))">
+                      <td>@Html.DisplayFor(m => model.VEHICLENUMBER)</td>
+                      <td>@Html.DisplayFor(m => model.NUMBERSEQUENCE)</td>
+                      <td>@Html.DisplayFor(m => model.ACXVEHICLEARRIVALDATE)</td>
+                      <td>@Html.DisplayFor(m => model.ACXVEHICLEARRIVALTIME)</td>
+                      <td>@Html.DisplayFor(m => model.NAME)</td>
+                      <td>@Html.DisplayFor(m => model.TRANSPORTERNAME)</td>
+                      <td>@Html.DisplayFor(m => model.TOSITEID)</td>
+                      <td>@Html.DisplayFor(m => model.ACXTOKEN)</td>
+                      <td>
+                        @if (model.ArrivalDateAndTime == ("01-01-0001 12:00:00 AM") || model.ArrivalDateAndTime == ("01-01-0001 12:00:00 PM") || model.ArrivalDateAndTime == ("1/1/0001 12:00:00 AM") || model.ArrivalDateAndTime == ("01/01/0001 12:00:00 AM"))
+                        {
+                          <span></span>
+                        }
+                        else
+                        {
+                          @Html.DisplayFor(m => model.ArrivalDateAndTime)
+                        }
+
+                      </td>
+                      <td>
+                        @if (model.EXITTIME == ("01-01-0001 12:00:00 AM") || model.EXITTIME == ("01-01-0001 12:00:00 PM") || model.EXITTIME == ("1/1/0001 12:00:00 AM") || model.EXITTIME == ("01/01/0001 12:00:00 AM"))
+                        {
+                          <span></span>
+                        }
+                        else
+                        {
+                          @Html.DisplayFor(m => model.EXITTIME)
+                        }
+                      </td>
+                      <td>@Html.DisplayFor(m => model.Duration)</td>
+                    </tr>
+                  }
+                }
+                else
+                {
+                  <tr>
+                    <td colspan="11">No data available.</td>
+                  </tr>
+                }
+              }
+              else
+              {
+                <tr>
+                  <td colspan="11">Please select a SiteId and click View.</td>
+                </tr>
+              }
+            </tbody>
+        </table>
+    </div>
+   
+
+<script>
+
+    function logout() {
+        window.location.href = '/Home/Index';
+        sessionStorage.removeItem('selectedSiteIdsGateDisplay');
+        session.removeItem('CompanyId');
+        session.removeItem('GateStoreIDs');
+
+    }
+    function toggleDropdown() {
+        var dropdownMenu = document.getElementById("dropdownMenu");
+        dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+    }
+
+    function applySelection() {
+        var dropdownMenu = document.getElementById("dropdownMenu");
+        dropdownMenu.style.display = "none";
+
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        var selectedSiteIds = [];
+        checkboxes.forEach(function (checkbox) {
+            selectedSiteIds.push(checkbox.value);
+        });
+
+        // Store selected site IDs in sessionStorage for the "Gate Display" view
+        sessionStorage.setItem('selectedSiteIdsGateDisplay', JSON.stringify(selectedSiteIds));
+
+        // Submit the form
+        document.getElementById("filterForm").submit();
+    }
+
+    // Retrieve selected site IDs from sessionStorage and set the checkboxes as checked
+    document.addEventListener('DOMContentLoaded', function () {
+        var selectedSiteIds = JSON.parse(sessionStorage.getItem('selectedSiteIdsGateDisplay'));
+        if (selectedSiteIds) {
+            selectedSiteIds.forEach(function (siteId) {
+                var checkbox = document.querySelector('input[value="' + siteId + '"]');
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+        }
+    });
+</script>
+
+    <!-- ... Your HTML code ... -->
+    <!-- ... Your HTML code ... -->
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            background-color: #3051a0;
+            color: #fff;
+            height: 50px;
+            padding: 10px;
+        }
+
+        .header-logo {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .header-text {
+            margin: 0;
+            flex-grow: 1;
+            text-align: center;
+            margin-right: 5%;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 40%; /* Increase the gap between buttons */
+            margin-top: 20%;
+        }
+
+            .button-container button {
+                flex-shrink: 0; /* Prevent the buttons from shrinking */
+            }
+
+        button {
+            padding: 30px 60px; /* Increase the padding for larger buttons */
+            font-size: 25px; /* Increase the font size */
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                opacity: 0.8;
+            }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="~/Image/logoamber.png" alt="Logo" class="header-logo" />
+        <h1 class="header-text">Amber Enterprises India Limited</h1>
+    </div>
+
+    <div class="button-container">
+        <button id="button1">Store Display</button>
+        <button id="button2">Gate Display</button>
+    </div>
+
+    <script>
+        document.getElementById("button1").addEventListener("click", function () {
+            window.location.href = '@Url.Action("ViewData", "AmberFetchData")';
+        });
+
+        document.getElementById("button2").addEventListener("click", function () {
+            window.location.href = '@Url.Action("GetDisplayView", "GetDisplayData")';
+        });
+    </script>
+</body>
+</html>
